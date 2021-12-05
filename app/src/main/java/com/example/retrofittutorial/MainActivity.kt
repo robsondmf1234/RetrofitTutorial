@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity() {
         val viewModelFactory = MainViewModelFactory(repository)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+
+/*
+        //GET
+        //post
+
         viewModel.getPost()
         viewModel.myResponse.observe(this, Observer { response ->
             if (response.isSuccessful) {
@@ -38,5 +43,27 @@ class MainActivity : AppCompatActivity() {
                 binding.textView.text = response.code().toString()
             }
         })
+*/
+
+        binding.btnOk.setOnClickListener {
+            val numberPost = binding.edtNumber.text.toString()
+
+            viewModel.getPost2(Integer.parseInt(numberPost))
+
+            viewModel.myResponse2.observe(this, Observer { response ->
+                if (response.isSuccessful) {
+                    binding.textView.text = response.body()?.body
+
+                    Log.d("Response", response.body()?.userId.toString())
+                    Log.d("Response", response.body()?.id.toString())
+                    Log.d("Response", response.body()?.title!!)
+                    Log.d("Response", response.body()?.body!!)
+                } else {
+                    Log.d("Response", response.errorBody().toString())
+                    binding.textView.text = response.code().toString()
+                }
+            })
+
+        }
     }
 }
