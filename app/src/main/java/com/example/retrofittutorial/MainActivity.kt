@@ -45,25 +45,66 @@ class MainActivity : AppCompatActivity() {
         })
 */
 
+        /*   binding.btnOk.setOnClickListener {
+               val numberPost = binding.edtNumber.text.toString()
+
+               viewModel.getPost2(Integer.parseInt(numberPost))
+
+               viewModel.myResponse2.observe(this, Observer { response ->
+                   if (response.isSuccessful) {
+                       binding.textView.text = response.body().toString()
+
+                       Log.d("Response", response.body()?.userId.toString())
+                       Log.d("Response", response.body()?.id.toString())
+                       Log.d("Response", response.body()?.title!!)
+                       Log.d("Response", response.body()?.body!!)
+                   } else {
+                       Log.d("Response", response.errorBody().toString())
+                       binding.textView.text = response.code().toString()
+                   }
+               })
+
+           }*/
+
+        /*  binding.btnOk.setOnClickListener {
+              val numberPost = binding.edtNumber.text.toString()
+              viewModel.getCustomPosts(Integer.parseInt(numberPost))
+
+              viewModel.myResponse3.observe(this, Observer { response ->
+                  if (response.isSuccessful) {
+                      binding.textView.text = response.body().toString()
+                      response.body()?.forEach {
+                          Log.d("Response", it.userId.toString())
+                          Log.d("Response", it.id.toString())
+                          Log.d("Response", it.title.toString())
+                          Log.d("Response", it.body.toString())
+                      }
+                  } else {
+                      Log.d("Response", response.errorBody().toString())
+                      binding.textView.text = response.code().toString()
+                  }
+              })
+          } */
+
         binding.btnOk.setOnClickListener {
             val numberPost = binding.edtNumber.text.toString()
+            viewModel.getCustomPostsQueries(Integer.parseInt(numberPost), "id", "desc")
 
-            viewModel.getPost2(Integer.parseInt(numberPost))
-
-            viewModel.myResponse2.observe(this, Observer { response ->
+            viewModel.myResponse4.observe(this, Observer { response ->
                 if (response.isSuccessful) {
-                    binding.textView.text = response.body()?.body
-
-                    Log.d("Response", response.body()?.userId.toString())
-                    Log.d("Response", response.body()?.id.toString())
-                    Log.d("Response", response.body()?.title!!)
-                    Log.d("Response", response.body()?.body!!)
+                    binding.textView.text = response.body().toString()
+                    response.body()?.forEach {
+                        Log.d("Response", it.userId.toString())
+                        Log.d("Response", it.id.toString())
+                        Log.d("Response", it.title.toString())
+                        Log.d("Response", it.body.toString())
+                    }
                 } else {
                     Log.d("Response", response.errorBody().toString())
                     binding.textView.text = response.code().toString()
                 }
             })
-
         }
+
     }
 }

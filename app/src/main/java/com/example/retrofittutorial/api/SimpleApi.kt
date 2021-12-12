@@ -4,8 +4,9 @@ import com.example.retrofittutorial.model.Post
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
-//Interface conterá os endpoints que precisaremos para fazer as chamadas
+//Interface que conterá os endpoints que precisaremos para fazer as chamadas
 //
 interface SimpleApi {
 
@@ -15,9 +16,26 @@ interface SimpleApi {
     //Receberá como retorno um objeto do tipo Post
     suspend fun getPost(): Response<Post>
 
-
+    //Endpoint que enviará um number no corpo da chamada, number que virá como parametro atraves
+    // da Activity> ViewModel > Repository > SimpleApi(interface)
     @GET("posts/{postNumber}")
-    suspend fun getPost2(
-        @Path("postNumber") number: Int
-    ): Response<Post>
+    //postNumber
+    suspend fun getPost2(@Path("postNumber") number: Int): Response<Post>
+
+
+    //Endpoint que receberá como parametro um userId,
+    // que será enviado na chamada
+    //Receberá como retorno um Response com uma Lista do tipo Post
+    @GET("posts")
+    suspend fun getCustomPost(
+        @Query("userId") userId: Int
+    ): Response<List<Post>>
+
+    @GET("posts")
+    suspend fun getCustomPostQueries(
+        @Query("userId") userId: Int,
+        @Query("_sort") sort: String,
+        @Query("_order") order: String
+    ): Response<List<Post>>
+
 }
